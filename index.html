@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Interactive US Map</title>
+  <style>
+    svg path {
+      fill: #ddd;
+      stroke: #333;
+      stroke-width: 1;
+      transition: fill 0.2s;
+    }
+    svg path:hover {
+      fill: orange;
+      cursor: pointer;
+    }
+    #tooltip {
+      position: absolute;
+      background: #222;
+      color: #fff;
+      padding: 5px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+      font-size: 14px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hover over a state</h1>
+  <div id="map-container" style="position: relative;">
+    <div id="tooltip"></div>
+    <!-- INSERT SVG MAP HERE -->
+  </div>
+
+  <script>
+    const tooltip = document.getElementById("tooltip");
+
+    document.addEventListener("mousemove", function (e) {
+      tooltip.style.top = (e.pageY + 15) + "px";
+      tooltip.style.left = (e.pageX + 15) + "px";
+    });
+
+    document.querySelectorAll("svg path").forEach(state => {
+      state.addEventListener("mouseenter", () => {
+        tooltip.innerText = state.getAttribute("name");
+        tooltip.style.display = "block";
+      });
+      state.addEventListener("mouseleave", () => {
+        tooltip.style.display = "none";
+      });
+    });
+  </script>
+</body>
+</html>
